@@ -128,7 +128,6 @@ void testverify()
 	sign_value[63] = 0xe5;
 
 
-
 	unsigned char pubKey[64];
 	pubKey[0] = 0x62;
 	pubKey[1] = 0xb3;
@@ -242,12 +241,17 @@ void  GMSSL_Sm4Test(unsigned char *in, unsigned int inlenth, unsigned char *out,
 {
 }
 
-
+extern int AES_Test();
+extern int Des_Test();
+extern int crypto_test();
 
 int main()
 {
 	cout << "Hello,Gmssl" << endl;
 	//testverify();
+	AES_Test();
+	Des_Test();
+	crypto_test();
 
 	//SM4 Ëã·¨²âÊÔ
 	unsigned char in[16] = { 0 };

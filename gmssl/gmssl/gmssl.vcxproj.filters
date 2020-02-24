@@ -18,6 +18,15 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="aes_test.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="destest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="libcrypto.lib">
