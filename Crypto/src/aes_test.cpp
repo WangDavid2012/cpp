@@ -1,18 +1,18 @@
 #include <stdio.h>
-#include "openssl/aes.h"
+#include <openssl/aes.h>
 #include <stdlib.h>
 #include <string.h>
 
 int aes_test()
 {
-	unsigned char key[16 + 1] = "my-key-i-choosed"; // 128bits key (Ó¦¸ÃÊÇÕæÕıµÄËæ»úÊı²ÅºÃ)
-	char pt1[16 + 5 + 1] = "0123456789abcdef12345";   // Ã÷ÎÄ
-	char ct[16 + 5 + 1];  // ÃÜÎÄ
-	char pt2[16 + 5 + 1]; // ½âÃÜºóµÄÃ÷ÎÄ
+	unsigned char key[16 + 1] = "my-key-i-choosed"; // 128bits key (åº”è¯¥æ˜¯çœŸæ­£çš„éšæœºæ•°æ‰å¥½)
+	char pt1[16 + 5 + 1] = "0123456789abcdef12345";   // æ˜æ–‡
+	char ct[16 + 5 + 1];  // å¯†æ–‡
+	char pt2[16 + 5 + 1]; // è§£å¯†åçš„æ˜æ–‡
 
 	AES_KEY k;
-	unsigned char iv1[16 + 1] = { "1023456789abcdef" }; // 16+1£¬¼ÓÃÜÓÃ
-	unsigned char iv2[16 + 1] = { "1023456789abcdef" }; // 16+1£¬½âÃÜÓÃ
+	unsigned char iv1[16 + 1] = { "1023456789abcdef" }; // 16+1ï¼ŒåŠ å¯†ç”¨
+	unsigned char iv2[16 + 1] = { "1023456789abcdef" }; // 16+1ï¼Œè§£å¯†ç”¨
 
 	{    // single blcok test
 		AES_set_encrypt_key(key, 16 * 8, &k);

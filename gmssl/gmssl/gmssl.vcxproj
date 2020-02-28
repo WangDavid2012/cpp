@@ -144,13 +144,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="aes_test.cpp" />
-    <ClCompile Include="destest.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="test.cpp" />
+    <Library Include="libcrypto.lib" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="libcrypto.lib" />
+    <ClCompile Include="..\src\aes_test.cpp" />
+    <ClCompile Include="..\src\des_test.cpp" />
+    <ClCompile Include="..\src\hmac_test.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\sm3_test.cpp" />
+    <ClCompile Include="..\src\sm4_test.cpp" />
+    <ClCompile Include="..\src\test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
