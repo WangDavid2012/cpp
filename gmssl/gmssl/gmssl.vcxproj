@@ -74,8 +74,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\GmSSL_lib\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\GmSSL\lib_64;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\gmssl_lib_win\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\gmssl_lib_win\lib_64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -151,6 +151,7 @@
     <ClCompile Include="..\src\des_test.cpp" />
     <ClCompile Include="..\src\hmac_test.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\sm2_test.cpp" />
     <ClCompile Include="..\src\sm3_test.cpp" />
     <ClCompile Include="..\src\sm4_test.cpp" />
     <ClCompile Include="..\src\test.cpp" />

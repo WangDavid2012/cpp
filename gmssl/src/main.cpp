@@ -248,14 +248,17 @@ extern int sm4_test1();
 extern int sm4_test2();
 extern int sm3_test();
 extern int hmac_test();
-
+extern int sm2_generatekey_test(ECCrefPublicKey &pubkey, ECCrefPrivateKey &prikey);
+extern int sm2_encdec_test();
 int main()
 {
 	cout << "Hello,Gmssl" << endl;
+	sm2_encdec_test();
+
 	testverify();
 	aes_test();
 	des_test();
-	crypto_test();
+	//crypto_test();
 	sm4_test1();
 	getchar();
 	return 0;

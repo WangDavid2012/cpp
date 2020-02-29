@@ -1,4 +1,4 @@
-#include <openssl/sm3.h>
+#include "openssl/sm3.h"
 
 
 int sm3_test()

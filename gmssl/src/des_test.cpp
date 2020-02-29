@@ -1,9 +1,9 @@
-﻿#include<openssl/des.h>
-#include<openssl/pem.h>
-#include<openssl/err.h>
+﻿#include <openssl/des.h>
+#include <openssl/pem.h>
+#include <openssl/err.h>
 #include <openssl/bio.h>
 #include <iostream>
-
+#include <string.h>
 
 
 static int base64_decode(char *str, int str_len, unsigned char *decode)
