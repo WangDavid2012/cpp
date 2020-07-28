@@ -2,6 +2,15 @@
 #include <memory>
 #include <iostream>
 
+/****************************************************************************************
+	C++ 标准库里面的类模板:enable_shared_from_this
+	enable_shared_from_this中有一个弱指针weak_ptr,这个弱指针能够监视this
+	在调用enabled_shard_form_this()这个方法时，这个方法内部实际调用了这个weak_ptr的lock方法
+	lock()方法会让shard_ptr指针计数加1，同时返回shard_ptr,这就是工作原理
+
+***************************************************************************************/
+
+
 class Bad
 {
 public:
@@ -49,6 +58,11 @@ void test2()
 	}
 	system("pause");
 }
+
+
+
+
+
 
 int main()
 {

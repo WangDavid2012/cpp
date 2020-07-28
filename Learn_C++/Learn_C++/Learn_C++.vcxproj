@@ -142,6 +142,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\bind_test.cpp" />
+    <ClCompile Include="..\src\class_test.cpp" />
+    <ClCompile Include="..\src\count_test.cpp" />
+    <ClCompile Include="..\src\explicit_test.cpp" />
+    <ClCompile Include="..\src\file_test.cpp" />
+    <ClCompile Include="..\src\isstringstream_test.cpp" />
+    <ClCompile Include="..\src\lambda_test.cpp" />
+    <ClCompile Include="..\src\LinkList.cpp" />
+    <ClCompile Include="..\src\linklist_test.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\maptest.cpp" />
+    <ClCompile Include="..\src\move_test.cpp" />
+    <ClCompile Include="..\src\multhread_test.cpp" />
+    <ClCompile Include="..\src\operator_test.cpp" />
+    <ClCompile Include="..\src\shareptr_test.cpp" />
+    <ClCompile Include="..\src\static_cast_test.cpp" />
+    <ClCompile Include="..\src\string_test.cpp" />
+    <ClCompile Include="..\src\template_test.cpp" />
+    <ClCompile Include="..\src\thread_test.cpp" />
+    <ClCompile Include="..\src\time_test.cpp" />
+    <ClCompile Include="..\src\transform_test.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\common.h" />
+    <ClInclude Include="..\src\debug.h" />
+    <ClInclude Include="..\src\LinkList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
