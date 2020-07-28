@@ -10,4 +10,4 @@ typedef struct _NODE
 	struct _NODE *pNext;
 }*PNODE, NODE;
 
-typedef enum { false = 0, true } bool;
+//typedef enum { false = 0, true = !0 } bool;

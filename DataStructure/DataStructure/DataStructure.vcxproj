@@ -154,7 +154,7 @@
     <ClCompile Include="my_tree.cpp" />
     <ClCompile Include="search.c" />
     <ClCompile Include="singlelinkedlist.c" />
-    <ClCompile Include="main.c" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="queue.c" />
     <ClCompile Include="stack.c" />
     <ClCompile Include="stack1.cpp" />

@@ -1,11 +1,15 @@
 #pragma once
-namespace stacksavitch
-{
+#include <iostream>
+#include <string>
+
+namespace stacktest {
+
+
 	struct StackFrame {
 		char data;
 		StackFrame *link;
 	};
-	typedef StackFrame * StatckFramePtr;
+	typedef StackFrame *StatckFramePtr;
 
 
 	class Stack {
@@ -20,7 +24,4 @@ namespace stacksavitch
 		StatckFramePtr top;
 
 	};
-
-
-
 }

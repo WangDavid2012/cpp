@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="queue.c">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -36,9 +33,6 @@
     <ClCompile Include="tree.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="search.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="bz_stack.c">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -55,6 +49,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="stack1.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="search.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

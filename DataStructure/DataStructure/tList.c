@@ -234,11 +234,11 @@ void tListRemove(tList * list, tNode * node)
 void ParentNodeAddr_Test()
 {
 	
-	tTask sleepTask;
+	//tTask sleepTask;
 
 	//tNodeParent(node,tTask,delayNode);
 
-	printf("test ParentNodeAddr functino\n");
+	//printf("test ParentNodeAddr functino\n");
 
 
 
