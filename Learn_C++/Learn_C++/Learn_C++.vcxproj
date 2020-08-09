@@ -156,6 +156,8 @@
     <ClCompile Include="..\src\move_test.cpp" />
     <ClCompile Include="..\src\multhread_test.cpp" />
     <ClCompile Include="..\src\operator_test.cpp" />
+    <ClCompile Include="..\src\packaged_task_test.cpp" />
+    <ClCompile Include="..\src\promise_test.cpp" />
     <ClCompile Include="..\src\shareptr_test.cpp" />
     <ClCompile Include="..\src\static_cast_test.cpp" />
     <ClCompile Include="..\src\string_test.cpp" />

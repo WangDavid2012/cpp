@@ -23,6 +23,8 @@ extern void time_test1();
 extern void time_test2();
 extern void multithread_time_test();
 extern void lambda_test0();
+extern int promise_test0();
+extern int promise_test1();
 
 string AbsolutelyPath(const string &s) {
 	char *cur = _getcwd(NULL, 0);
@@ -40,6 +42,7 @@ string AbsolutelyPath(const string &s) {
 int main()
 {
 	cout << "C++ learn !" << endl;
+	promise_test0();
 	time_test1();
 	time_test2();
 	lambda_test0();
