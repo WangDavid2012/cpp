@@ -34,36 +34,36 @@
 #include <string>
 #include <vector>
 
-void foo(const std::string& n)
+void foo(const std::string &n)
 {
-	std::cout << "lvalue" << std::endl;
+    std::cout << "lvalue" << std::endl;
 }
 
-void foo(std::string&& n)
+void foo(std::string &&n)
 {
-	std::cout << "rvalue" << std::endl;
+    std::cout << "rvalue" << std::endl;
 }
 
 void bar()
 {
-	foo("hello");                // rvalue 右值（只能在右边出现）
-	std::string a = "world";
-	foo(a);                      // lvalue（左值）
-	foo(std::move(a));           // rvalue（强行转换）
+    foo("hello");                // rvalue 右值（只能在右边出现）
+    std::string a = "world";
+    foo(a);                      // lvalue（左值）
+    foo(std::move(a));           // rvalue（强行转换）
 }
 
 int move_test()
 {
-	std::vector<std::string> a = { "hello", "world" };
-	std::vector<std::string> b;
-	//a[1].c_str();
+    std::vector<std::string> a = { "hello", "world" };
+    std::vector<std::string> b;
+    //a[1].c_str();
 
-	b.push_back("hello");
-	b.push_back(std::move(a[1]));
+    b.push_back("hello");
+    b.push_back(std::move(a[1]));
 
-	std::cout << "bsize: " << b.size() << std::endl;
-	for (std::string& x : b)
-		std::cout << x << std::endl;
-	bar();
-	return 0;
+    std::cout << "bsize: " << b.size() << std::endl;
+    for (std::string &x : b)
+        std::cout << x << std::endl;
+    bar();
+    return 0;
 }
