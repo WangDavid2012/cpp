@@ -26,7 +26,7 @@ int main()
 			isStartImmediate,             // flags to control the creation of the thread. Passing zero starts the thread immediately. 
 										  // Passing CREATE_SUSPENDED suspends the thread until the ResumeThread( ) function is called.
 			&dwThreadID[i]                // pointer to a 32-bit variable that receives the thread identifier.
-			);
+		);
 		if (hThread[i])
 		{
 			printf("Thread launched successfully\n");
@@ -64,7 +64,7 @@ DWORD WINAPI PrintThreads(LPVOID num)
 	return 0;
 }
 
-/*  
+/*
 线程相关的API接口函数用法
 CreateThread() 调用成功返回句柄和一个id。
 CloseHandle()  关闭一个打开的对象句柄，该对象句柄可以是线程句柄，也可以是进程、

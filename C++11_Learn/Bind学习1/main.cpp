@@ -49,7 +49,7 @@ int main(int argc, const char * argv[])
 	A a;
 	auto f5 = std::bind(&A::fun_3, a, placeholders::_1, placeholders::_2);
 	f5(10, 20);//print:10 20
-
+	//定义了一个函数指针 fc，返回值是void，参数 int int
 	std::function<void(int, int)> fc = std::bind(&A::fun_3, a, std::placeholders::_1, std::placeholders::_2);
 	fc(10, 20);//print:10 20
 

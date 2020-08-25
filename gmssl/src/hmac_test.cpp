@@ -15,6 +15,7 @@ int hmac_test()
 	}
 	sm3_hmac(data, 8192, hmac_key, 16, mac);
 	cout << "sm3_hmac 8192byte data :" << endl;
+
 	for (int i = 0; i < 16; i++)
 	{
 		cout << hex << mac[i] << " " << endl;

@@ -8,6 +8,8 @@
 #include "openssl/rsa.h"    
 #include "openssl/pem.h"    
 
+#define _CRT_SECURE_NO_WARNINGS
+
 // ---- md5摘要哈希 ---- //    
 void md5(const std::string &srcStr, std::string &encodedStr, std::string &encodedHexStr)
 {
@@ -163,6 +165,14 @@ std::string des_decrypt(const std::string &cipherText, const std::string &key)
 #define PRI_KEY_FILE "prikey.pem"    // 私钥路径  
 
 // 函数方法生成密钥对   
+
+/**
+ *  \brief ddadd
+ *  
+ *  \return fdasd
+ *  
+ *  \details More details
+ */
 void generateRSAKey(std::string strKey[2])
 {
 	// 公私密钥对    
@@ -176,6 +186,9 @@ void generateRSAKey(std::string strKey[2])
 
 	BIO *pri = BIO_new(BIO_s_mem());
 	BIO *pub = BIO_new(BIO_s_mem());
+
+	//#  define DECLARE_PEM_read_bio(name, type) \
+	//        type *PEM_read_bio_##name(BIO *bp, type **x, pem_password_cb *cb, void *u);
 
 	PEM_write_bio_RSAPrivateKey(pri, keypair, NULL, NULL, 0, NULL, NULL);
 	PEM_write_bio_RSAPublicKey(pub, keypair);
@@ -217,6 +230,9 @@ void generateRSAKey(std::string strKey[2])
 	fputs(pri_key, priFile);
 	fclose(priFile);
 
+
+	//RSA_print_fp(stdout, keypair, 0);
+
 	// 内存释放  
 	RSA_free(keypair);
 	BIO_free_all(pub);
@@ -230,6 +246,8 @@ void generateRSAKey(std::string strKey[2])
 // 找到openssl命令行工具，运行以下  
 // openssl genrsa -out prikey.pem 1024   
 // openssl rsa - in privkey.pem - pubout - out pubkey.pem  
+// 实际应用中，出于安全考虑我们一般会对私钥文件加密。我们可以用如下的方式来重新生成经3DES加密后私钥文件：
+// openssl genrsa -des3 -out cipherPrv.key 1024
 
 // 公钥加密    
 std::string rsa_pub_encrypt(const std::string &clearText, const std::string &pubKey)

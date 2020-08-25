@@ -103,6 +103,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,13 +149,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\aes_test.cpp" />
+    <ClCompile Include="..\src\asn1_test.cpp" />
+    <ClCompile Include="..\src\bio_test.cpp" />
     <ClCompile Include="..\src\des_test.cpp" />
     <ClCompile Include="..\src\hmac_test.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\rsa_test.cpp" />
     <ClCompile Include="..\src\sm2_test.cpp" />
     <ClCompile Include="..\src\sm3_test.cpp" />
     <ClCompile Include="..\src\sm4_test.cpp" />
-    <ClCompile Include="..\src\test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -8,8 +8,8 @@
 #ifdef __cplusplus 
 extern "C" {
 #endif
-//告诉编译器，下面的代码以C语言的方式进行编译
-//如果将 extern "C" 注释掉，编译会报错
+	//告诉编译器，下面的代码以C语言的方式进行编译
+	//如果将 extern "C" 注释掉，编译会报错
 
 #include"moduleA.h"
 
