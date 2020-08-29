@@ -1,3 +1,34 @@
+<<<<<<< HEAD
+#include <iostream>
+#include <map>
+#include <set>
+#include <string>
+#include <iostream>
+#include <utility>      //pair ¶¨ÒåµÄÎÄ¼ş
+
+
+
+using namespace std;
+
+
+void map_test()
+{
+	// ¶¨ÒåÒ»¸ömap¶ÔÏó
+	map<int, string> mapStudent;
+
+	// µÚÒ»ÖÖ ÓÃinsertº¯”µ²åÈëpair
+	mapStudent.insert(pair<int, string>(000, "student_zero"));
+	mapStudent.insert(make_pair(10, "wangzhanbei"));
+
+	// µÚ¶şÖÖ ÓÃinsertº¯Êı²åÈëvalue_typeÊı¾İ
+	mapStudent.insert(map<int, string>::value_type(001, "student_one"));
+
+	// µÚÈıÖÖ ÓÃ"array"·½Ê½²åÈë
+	mapStudent[123] = "student_first";
+	mapStudent[456] = "student_second";
+
+}
+=======
 ï»¿#include <iostream>
 #include <map>
 #include <set>
@@ -189,3 +220,4 @@ void multimap_test1()
 	}
 	cout << endl;
 }
+>>>>>>> 2a8dddf120c2aaa302c7f817dba894da97e11960

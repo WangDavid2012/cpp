@@ -1,3 +1,113 @@
+<<<<<<< HEAD
+#define  _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+
+using namespace std;
+
+void static_cast_test(void)
+{
+	double PI = 3.14159265;
+
+	//int num = PI;
+	int num2 = (int)PI; //CÓïÑÔµÄ×ª»»·½Ê½
+						//static_cast Ôö¼Ó¿É¶ÁĞÔ£¬´ú±íÆÕÍ¨ÀàĞÍµÄÇ¿ÖÆ×ª»»£¬
+						//static_cast Êµ¼ÊÉÏÊÇÓÖ±àÒëÆ÷ÔÚ±àÒëµÄÊ±ºò¾ÍÒÑ¾­½«PI½âÊÍ³ÉnumÀàĞÍÁË
+	int num3 = static_cast<int>(PI);
+
+	cout << "num2" << num2 << endl;
+	cout << "num3" << num3 << endl;
+}
+
+
+
+class A
+{
+public:
+	virtual void func() {
+		cout << "A" << endl;
+	}
+	int a;
+};
+
+class B :public A
+{
+public:
+	virtual void func() {
+		cout << "B" << endl;
+	}
+	int b;
+};
+
+//¶¯ÎïµÄ³éÏóÀà
+class Animal
+{
+public:
+	virtual void cry() = 0;// ´¿Ğéº¯Êı
+	virtual void doHome() = 0;// ´¿Ğéº¯Êı
+};
+
+class Dog :public Animal {
+public:
+	virtual void cry() {
+		cout << "ÍôÍô~~" << endl;
+	}
+
+	void doHome() {
+		cout << "¿´¼Ò" << endl;
+	}
+};
+
+class Cat :public Animal {
+public:
+	virtual void cry() {
+		cout << "ß÷ß÷~~" << endl;
+	}
+	void doHome() {
+		cout << "×¥ÀÏÊó" << endl;
+	}
+};
+
+
+
+void dynamic_cast_test(void)
+{
+	Animal *animal = NULL;
+	animal = new Dog;
+	animal->cry();
+
+	Dog *dog = new Dog;
+	cout << " ----- " << endl;
+
+	dog = dynamic_cast<Dog*> (animal);
+	if (dog != NULL) {
+		cout << "×ª»»³É¹¦" << endl;
+		dog->cry();
+		dog->doHome();
+	}
+	else {
+		cout << "×ª»»Ê§°Ü" << endl;
+	}
+	//dynamic _cast ÊÇ½«¸¸Àà×ª»»³É×ÓÀà¡£ÈÃÀÏ×Ó±ä³É¶ù×Ó¡£
+	//ÈÃ×ÓÀàÖ¸ÕëÖ´ĞĞ¸¸ÀàµÄ¶ÔÏó¡£
+
+	Cat *cat = dynamic_cast<Cat*>(animal);
+	//×¼±¸ÊÔÍ¼ÈÃÒ»Ö»¹·±ä³ÉÒ»Ö»Ã¨
+	if (cat != NULL) {
+		cout << "×ª»»³É¹¦" << endl;
+		cat->cry();
+		cat->doHome();
+	}
+	else {
+		cout << "×ª»»Ê§°Ü" << endl;
+	}
+
+	A *ap = new A;
+	B *bp = dynamic_cast<B*>(ap);
+	if (bp != NULL) {
+		bp->func();
+	}
+}
+=======
 ï»¿#define  _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 
@@ -102,3 +212,4 @@ void dynamic_cast_test(void)
 		bp->func();
 	}
 }
+>>>>>>> 2a8dddf120c2aaa302c7f817dba894da97e11960

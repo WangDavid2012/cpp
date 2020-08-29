@@ -63,6 +63,8 @@
     <ClCompile Include="..\src\linklist_test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+<<<<<<< HEAD
+=======
     <ClCompile Include="..\src\thread_test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -111,6 +113,7 @@
     <ClCompile Include="..\src\linux_queue_test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+>>>>>>> 2a8dddf120c2aaa302c7f817dba894da97e11960
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\common.h">
@@ -119,6 +122,8 @@
     <ClInclude Include="..\src\LinkList.h">
       <Filter>头文件</Filter>
     </ClInclude>
+<<<<<<< HEAD
+=======
     <ClInclude Include="..\src\debug.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -131,5 +136,6 @@
     <ClInclude Include="..\src\ThreadPool.h">
       <Filter>头文件</Filter>
     </ClInclude>
+>>>>>>> 2a8dddf120c2aaa302c7f817dba894da97e11960
   </ItemGroup>
 </Project>
