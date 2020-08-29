@@ -13,6 +13,9 @@
 using namespace std;
 
 int b[] = { 2, 3, 6, 9, 11, 11, 11, 22, 32, 78 };
+
+
+//统计数组中a的个数
 int count_test1()
 {
     int a;
@@ -27,6 +30,7 @@ bool cmp(int a)
 {
     return a > 10;
 }
+//统计大于10的个数
 int count_test2()
 {
     //统计满足条件的计数
