@@ -16,9 +16,6 @@
     <Filter Include="源文件\net">
       <UniqueIdentifier>{7ba3e281-0813-4c96-9b84-66d820dc37f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\test">
-      <UniqueIdentifier>{5e8ae2d8-0cb6-48aa-9fca-2dc80892175e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="源文件\app">
       <UniqueIdentifier>{721f6531-5893-4255-b52d-1052fcd7cda2}</UniqueIdentifier>
     </Filter>
@@ -26,9 +23,6 @@
   <ItemGroup>
     <ClCompile Include="..\source\net\mmj_client.cpp">
       <Filter>源文件\net</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\test\testmain.cpp">
-      <Filter>源文件\test</Filter>
     </ClCompile>
     <ClCompile Include="..\source\net\InetAddress.cpp">
       <Filter>源文件\net</Filter>
@@ -102,28 +96,8 @@
     <ClCompile Include="..\source\app\Interface.cpp">
       <Filter>源文件\app</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\source\net\mmj_client.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\common\config.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\common\debug.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\api\queue.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\app\sdf\SDF.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\app\sdf\SDF_EX.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\app\SSF.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
+    <ClCompile Include="..\source\net\mmj.cpp">
+      <Filter>源文件\net</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

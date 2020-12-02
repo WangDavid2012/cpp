@@ -4,7 +4,7 @@
 #include "../base/SDFLog.h"
 #include "../api/C_API.h"
 #include "../api/C_API_EX.h"
-#include "Interface.h"
+#include "interface.h"
 
 
 /**导入临时公钥**/
@@ -38,7 +38,7 @@ u32 C_ImportPublicKey_ECC(sis_session* session, ECCrefPublicKey pucPublicKey, HA
 	session->mcu_task_info.resp_param[0].ptr_param_len = (u32 *)ptr_len_8;
 	session->mcu_task_info.resp_param[0].ptr_param = (u8*)&rspkeyaddr;
 
-	if (SDR_OK == (rst = vsm_process(session)))
+	if (SDR_OK == (rst = vsm_process(session,nullptr)))
 	{
 		rst = LIB_CreateWorkKey(session, phKeyHandle, rspkeyaddr, 1);
 	}
@@ -67,7 +67,7 @@ u32 C_ImportKey(sis_session* session, u8* pucKey, u32 uiKeyLength, HANDLE* phKey
 	session->mcu_task_info.resp_param[0].ptr_param_len = (u32 *)ptr_len_8;
 	session->mcu_task_info.resp_param[0].ptr_param = (u8*)&keyhandleaddr;
 
-	if (SDR_OK == (rst = vsm_process(session)))
+	if (SDR_OK == (rst = vsm_process(session,nullptr)))
 	{
 		rst = LIB_CreateWorkKey(session, phKeyHandle, keyhandleaddr, 1);
 	}
@@ -92,7 +92,7 @@ u32 C_GenerateKeyHandle(sis_session* session, HANDLE* phKeyHandle)
 	session->mcu_task_info.resp_param[0].ptr_param_len = (u32 *)ptr_len_8;
 	session->mcu_task_info.resp_param[0].ptr_param = (u8*)&respKeyAddress;
 
-	if (SDR_OK == (rst = vsm_process(session)))
+	if (SDR_OK == (rst = vsm_process(session,nullptr)))
 	{
 		LIB_CreateWorkKey(session, phKeyHandle, respKeyAddress, 1);
 	}
@@ -125,7 +125,7 @@ u32 C_GenerateKeyHandle_ECC(sis_session* session, HANDLE* phPkHandle, HANDLE* ph
 	session->mcu_task_info.resp_param[3].ptr_param_len = (u32 *)ptr_len_4;
 	session->mcu_task_info.resp_param[3].ptr_param = (u8*)&respPrvKeyAddress;
 
-	if (SDR_OK == (rst = vsm_process(session)))
+	if (SDR_OK == (rst = vsm_process(session,nullptr)))
 	{
 		respPubKeyHandle = ntohl(respPubKeyHandle);
 		respPubKeyAddress = ntohl(respPubKeyAddress);
@@ -171,7 +171,7 @@ u32 C_ExportKeyWithKey(sis_session* session, sis_work_key *key, sis_work_key *wo
 	session->mcu_task_info.resp_param[1].ptr_param_len = puiKeyLength;
 	session->mcu_task_info.resp_param[1].ptr_param = pucEncKey;
 
-	rst = vsm_process(session);
+	rst = vsm_process(session,nullptr);
 
 	return GET_FULL_ERR_CODE(rst);
 }
@@ -209,6 +209,6 @@ u32 C_ExportKeyWithKey_ECC(sis_session* session, sis_work_key *key, sis_work_key
 	session->mcu_task_info.resp_param[2].ptr_param_len = &(pEccCipher->L);
 	session->mcu_task_info.resp_param[2].ptr_param = (u8*)(pEccCipher->C);
 
-	rst = vsm_process(session);
+	rst = vsm_process(session,nullptr);
 	return GET_FULL_ERR_CODE(rst);
 }

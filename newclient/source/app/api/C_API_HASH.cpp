@@ -5,7 +5,7 @@
 #include "../base/Common.h"
 #include "../base/SDFLog.h"
 #include "../base/Util.h"
-#include "Interface.h"
+#include "interface.h"
 
 /**
  *  \brief SM3杂凑算法初始化
@@ -77,7 +77,7 @@ u32 C_HashInit_SM3(sis_session* session, u8* pID, u32 uiIdLen, u8* pPubkey, u32 
 		session->mcu_task_info.resp_param[0].ptr_param_len = &(hashContext->unsent_size);
 		session->mcu_task_info.resp_param[0].ptr_param = hashContext->unsent_buffer;
 
-		rst = vsm_process(session);
+		rst = vsm_process(session,nullptr);
 		if ((rst == SDR_OK) && (session->mcu_task_info.resp_head.status == 0)) {
 			hashContext->chunk_count = 0;
 			hashContext->padded_size = 0;
@@ -155,7 +155,7 @@ u32 C_Hash_SM3(sis_session* session, u8* pData, u32 uiDataLen)
 	session->mcu_task_info.resp_param[0].ptr_param_len = &(IVlenth);
 	session->mcu_task_info.resp_param[0].ptr_param = hashContext->iv;
 
-	rst = vsm_process(session);
+	rst = vsm_process(session,nullptr);
 	if ((rst == SDR_OK) && (session->mcu_task_info.resp_head.status == 0)) {
 		//hashContext->unsent_size = ntohs(session->mcu_task_info.resp_head.data_length);
 	}
@@ -167,7 +167,7 @@ u32 C_Hash_SM3(sis_session* session, u8* pData, u32 uiDataLen)
 	if (hashContext->unsent_size > 0)
 	{
 		memcpy(hashContext->unsent_buffer, pData + sendLength, hashContext->unsent_size);
-		std::cout << "*****************" << endl;
+		//std::cout << "*****************" << endl;
 	}
 	return rst;
 }
@@ -210,7 +210,7 @@ u32 C_HashFinal_SM3(sis_session* session, u8* pHash, u32* uiHashLen)
 	session->mcu_task_info.resp_param[0].ptr_param_len = &(phashlenth);
 	session->mcu_task_info.resp_param[0].ptr_param = pHash;
 
-	rst = vsm_process(session);
+	rst = vsm_process(session,nullptr);
 	if ((rst == SDR_OK) && (session->mcu_task_info.resp_head.status == 0)) {
 		*uiHashLen = (session->mcu_task_info.resp_head.data_length);
 		debug_printf("hash_final success,the rsplenth is 0x%02x\n", *uiHashLen);
@@ -258,7 +258,7 @@ u32 C_HashInit(sis_session* session, u32 uiAlgId, u8* pID, u32 uiIdLen, u8* pPub
 	session->mcu_task_info.resp_param[0].ptr_param_len = (u32*)&ptr_len_4;
 	session->mcu_task_info.resp_param[0].ptr_param = (u8*)(&session->hash_context);
 
-	if (SDR_OK == (rst = vsm_process(session))) {
+	if (SDR_OK == (rst = vsm_process(session,nullptr))) {
 	}
 	return GET_FULL_ERR_CODE(rst);
 }
@@ -368,7 +368,7 @@ u32 C_HMAC_Init(sis_session* session, sis_work_key *key, u32 Mechanism)
 	session->mcu_task_info.resp_param[1].ptr_param = session->hash_context.iv;
 
 
-	rst = vsm_process(session);
+	rst = vsm_process(session,nullptr);
 	rst = session->mcu_task_info.resp_head.status;
 	if (rst == SDR_OK) {
 		session->hmac_context.handle = ntohl(session->hmac_context.handle);
@@ -461,7 +461,7 @@ u32 C_HMAC_Final(sis_session* session, u8* pHash, u32* uiHashLen)
 	//session->mcu_task_info.resp_param[1].ptr_param_len = uiHashLen;   //注意原来是 &uiHashLen
 	session->mcu_task_info.resp_param[1].ptr_param = (u8*)pHash;
 
-	ret = vsm_process(session);
+	ret = vsm_process(session,nullptr);
 	ret = session->mcu_task_info.resp_head.status;
 	if (ret == SDR_OK)
 	{

@@ -13,24 +13,25 @@ rvalue通过排他性来定义，每个表达式不是lvalue就是rvalue。
 左值---指的是既能够出现在等号左边也能出现在等号右边的变量(或表达式)，
 右值---指的则是只能出现在等号右边的变量(或表达式).
 **/
-class A
-{
+class A {
 public:
-    void foo() const {
-        std::cout << "A::foo() const\n";
-    }
-    void foo() {
-        std::cout << "A::foo()\n";
-    }
+	void foo() const 
+	{ 
+		std::cout << "A::foo() const\n"; 
+	}
+	void foo() 
+	{ 
+		std::cout << "A::foo()\n"; 
+	}
 };
 
-A bar()
+A bar() 
 {
-    return A();
+	return A(); 
 }
-const A cbar()
-{
-    return A();
+const A cbar() 
+{ 
+	return A(); 
 }
 
 /*****************************************************
@@ -42,9 +43,9 @@ const A cbar()
 **********************************************/
 int lvalue_test0()
 {
-    bar().foo();  //调用foo
-    cbar().foo(); //调用foo const
-    return 0;
+	bar().foo();  //调用foo
+	cbar().foo(); //调用foo const
+	return 0;  
 }
 
 /****************
@@ -60,42 +61,35 @@ int lvalue_test0()
 class cs
 {
 public:
-    cs(int i) : i_(i) {
-        cout << "cs(" << i << ") constructor!" << endl;
-    }
-    ~cs() {
-        cout << "cs destructor,i(" << i_ << ")" << endl;
-    }
+	cs(int i) : i_(i) { cout << "cs(" << i << ") constructor!" << endl; }
+	~cs() { cout << "cs destructor,i(" << i_ << ")" << endl; }
 
-    cs &operator=(const cs &other) {
-        i_ = other.i_;
-        cout << "cs operator=()" << endl;
-        return *this;
-    }
+	cs& operator=(const cs& other)
+	{
+		i_ = other.i_;
+		cout << "cs operator=()" << endl;
+		return *this;
+	}
 
-    int get_i() const {
-        return i_;
-    }
-    void change(int i) {
-        i_ = i;
-    }
+	int get_i() const { return i_; }
+	void change(int i) { i_ = i; }
 
 private:
-    int i_;
+	int i_;
 };
 
 cs get_cs()
 {
-    static int i = 0;
-    return cs(i++);
+	static int i = 0;
+	return cs(i++);
 }
 
 int lvalue_test1()
 {
-    // 合法
-    (get_cs() = cs(2)).change(323);
-    get_cs() = cs(2);// operator=()
-    get_cs().change(32);
+	// 合法
+	(get_cs() = cs(2)).change(323);
+	get_cs() = cs(2);// operator=()
+	get_cs().change(32);
 
-    return 0;
+	return 0;
 }

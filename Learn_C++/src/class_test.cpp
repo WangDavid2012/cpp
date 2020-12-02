@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-#include <iostream>
+ï»¿#include <iostream>
 #include <string>
 
 using namespace std;
@@ -17,62 +16,24 @@ void ClassOne::PrintSomething(const string & strInput, const int & nInput)
 	cout << strInput << nInput << endl;
 }
 
-
 int class_test()
 {
-	// Ö±½ÓÊ¹ÓÃÀàÃû´´½¨¶ÔÏó
+	// ç›´æŽ¥ä½¿ç”¨ç±»ååˆ›å»ºå¯¹è±¡
 	ClassOne c1;
 	c1.m_one = 1;
 	string strSomething = "m_one value is: ";
 	c1.PrintSomething(strSomething, c1.m_one);
 
-	// Ê¹ÓÃnew´´½¨¶ÔÏó
+	// ä½¿ç”¨newåˆ›å»ºå¯¹è±¡
 	ClassOne *c2 = new ClassOne();
 	c2->m_one = 2;
 	c2->PrintSomething(strSomething, c2->m_one);
 	if (NULL != c2)
 	{
-		// Ê¹ÓÃdeleteÉ¾³ý¶ÔÏó
+		// ä½¿ç”¨deleteåˆ é™¤å¯¹è±¡
 		delete c2;
 		c2 = NULL;
 	}
 
 	return 0;
 }
-=======
-ï»¿#include <iostream>
-#include <string>
-
-using namespace std;
-
-class ClassOne {
-public:
-    int m_one;
-public:
-    void PrintSomething(const string &strInput, const int &nInput);
-};
-
-void ClassOne::PrintSomething(const string &strInput, const int &nInput) {
-    cout << strInput << nInput << endl;
-}
-
-int class_test() {
-    // ç›´æŽ¥ä½¿ç”¨ç±»ååˆ›å»ºå¯¹è±¡
-    ClassOne c1;
-    c1.m_one = 1;
-    string strSomething = "m_one value is: ";
-    c1.PrintSomething(strSomething, c1.m_one);
-
-    // ä½¿ç”¨newåˆ›å»ºå¯¹è±¡
-    ClassOne *c2 = new ClassOne();
-    c2->m_one = 2;
-    c2->PrintSomething(strSomething, c2->m_one);
-    if (NULL != c2) {
-        // ä½¿ç”¨deleteåˆ é™¤å¯¹è±¡
-        delete c2;
-        c2 = NULL;
-    }
-
-    return 0;
-}
->>>>>>> 2a8dddf120c2aaa302c7f817dba894da97e11960

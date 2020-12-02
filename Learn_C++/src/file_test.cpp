@@ -79,7 +79,7 @@ map<string,id> m_deviceInfoMap;
 	二、OpenDevice时，向文件中写入信息，m_deviceInfoMap 是否需要变化？
 	三、CloseDevice时，从文件中删除信息，m_deviceInfoMap 是否需要变化？
 
-是否需要采用观察者模式
+
 ***************************************************************/
 
 void  ofstream_test()

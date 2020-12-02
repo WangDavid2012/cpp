@@ -6,6 +6,7 @@
 #include "../base/Common.h"
 #include "../base/LinkList.h"
 #include "../base/VSM.h"
+#include <string>
 
 
 extern LinkList *g_deviceList;
@@ -40,6 +41,8 @@ typedef struct SIS_AGREMENT_CONTEXT
 #define STEP_HASH_INIT      0x00
 #define STEP_HASH_UPDATE	0x01
 #define STEP_HASH_FINAL     0x02
+
+
 typedef struct SIS_HASH_CONTEXT
 {
 	u32 handle;                             ///ARM运算所需要的对象
@@ -59,7 +62,7 @@ typedef struct SIS_HASH_CONTEXT
 #define STEP_MAC_FINAL	    0x02
 typedef struct SIS_SYM_CONTEXT
 {
-	u8 iv[SM14_IV_LEN];
+ 	u8 iv[SM14_IV_LEN];
 	u8 cfb_ctx[SM14_CHUNK_SIZE];
 } sis_sym_ctx_t;
 
@@ -70,6 +73,7 @@ typedef struct SIS_DEVICE
 	LinkNode *node;
 	LinkList *sessionlist;
 	LinkList *worklist;
+	std::string ip;
 
 	sis_device *next;
 	// pthread_mutex_t device_locker;  ///设备使用的锁
@@ -86,9 +90,9 @@ typedef struct SIS_SESSION
 	sis_fpga_task_info	fpga_task_info;			///交给虚拟密码机执行的任务信息
 	sis_mcu_task_info   mcu_task_info;			///交给虚拟密码机执行的任务信息
 
-	u8* key_right;                          ///会话中是否获取私钥权限
+	u8* key_right;                              ///会话中是否获取私钥权限
 	u32 key_count;
-	sis_device* device;                     ///会话所对应的设备句柄              
+	sis_device* device;                         ///会话所对应的设备句柄              
 	sis_agreement_context* agreement_context_front; ///协商上下文
 	sis_agreement_context* agreement_context_rear; ///协商上下文
 	sis_hash_ctx_t hash_context;
@@ -123,7 +127,7 @@ typedef struct SIS_WORK_KEY
 
 
 void LIB_HandleInit();
-u32 LIB_CreateDevice(u64 deviceHandleAddr, HANDLE* deviceHandle);
+u32 LIB_CreateDevice(u64 deviceHandleAddr, HANDLE* deviceHandle, std::string ip);
 u32 LIB_GetDevice(HANDLE deviceHandle, sis_device** device);
 u32 LIB_ReleaseDevice(sis_device* device, u8 isLocked);
 u32 LIB_ReleaseALLDevice(u8 isLocked);
@@ -139,7 +143,6 @@ u32 LIB_CreateAgreementContext(sis_session* session, HANDLE* agreementHandle, u8
 u32 LIB_GetAgreementContext(sis_session* session, HANDLE agreementHandle, sis_agreement_context** context);
 
 u32 LIB_ReleaseAgreementContext(sis_session* session, sis_agreement_context* context, u8 isLocked);
-
 u32 LIB_SetPrvKeyChecked(sis_session* session, u32 keyIndex);
 
 u32 LIB_SetPrvKeyUnchecked(sis_session* session, u32 keyIndex);

@@ -1,39 +1,12 @@
-<<<<<<< HEAD
-#include <iostream>
-
-using namespace std;
-
-extern int string_test();
-extern int string_test3();
-extern int transform_test();
-extern int operator_test();
-extern int shareptr_test();
-
-extern void linklist_test();
-extern void HandleTest();
-
-int main()
-{
-	cout << "C++ learn !" << endl;
-	linklist_test();
-	HandleTest();
-
-	shareptr_test();
-	operator_test();
-	transform_test();
-	string_test();
-	string_test3();
-	system("pause");
-	return 0;
-}
-=======
 ﻿#include <iostream>
 #include <windows.h>
 #include <direct.h>
 #include "queue.h"
 #include "min_heap.h"
+#include <vector>
 
 using namespace std;
+using std::vector;
 
 extern int string_test();
 extern int string_test3();
@@ -59,6 +32,13 @@ extern int threadpool_test();
 extern  int args_test();
 extern int result_of_test1();
 extern int result_of_test2();
+extern void file_test3();
+extern int threadpool_test();
+extern int async_test();
+extern int deadlock_test();
+
+
+void readwhiteiptable();
 
 string AbsolutelyPath(const string &s) {
 	char *cur = _getcwd(NULL, 0);
@@ -88,6 +68,11 @@ int minheap_test() {
 int main()
 {
 	cout << "******** Test ! *************" << endl;
+	args_test();
+	async_test();
+	readwhiteiptable();
+	file_test3();
+	filefunction_test();
 	result_of_test1();
 	result_of_test2();
 	threadpool_test();
@@ -112,4 +97,3 @@ int main()
 	system("pause");
 	return 0;
 }
->>>>>>> 2a8dddf120c2aaa302c7f817dba894da97e11960

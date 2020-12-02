@@ -4,7 +4,7 @@
 */
 #include "SDF.h"
 #include "SDF_EX.h"
-#include "Interface.h"
+#include "interface.h"
 #include "../api/C_API.h"
 #include "../api/C_API_EX.h"
 #include "../base/Context.h"
@@ -27,26 +27,26 @@ u32 SDF_OpenDeviceByID(HANDLE* phDeviceHandle, u8 *id, u32 lenth)
 	sis_session session = { 0 };
 	u32 idlenth = lenth;
 	u32 rst = 0;
-	u32 params[1] = { 0 };
-	u64 deviceAddr = 0;
-
-
-	memset(&(session), 0, sizeof(sis_session));
-	session.mcu_task_info.send_head.cmd = CMD_MAIN_SDF_ENV_MANAGE;
-	session.mcu_task_info.send_head.sub_cmd = CMD_SUB_OPEN_DEVICE_BY_ID;
-	session.mcu_task_info.send_head.data_length = lenth;
-
-	session.mcu_task_info.send_param_count = 1;
-	session.mcu_task_info.send_param[0].ptr_param_len = &idlenth;
-	session.mcu_task_info.send_param[0].ptr_param = id;
-
-	rst = vsm_process(&session);
-	if (rst == SDR_OK)
-	{
-		memcpy(&deviceAddr, session.mcu_task_info.resp_head.user_parm, 8);
-		rst = LIB_CreateDevice(deviceAddr, phDeviceHandle);
-		//debug_printf("The LIB_CreateDevice ret:%d,addr:0x%02x\n", rst, deviceAddr);
-	}
+// 	u32 params[1] = { 0 };
+// 	u64 deviceAddr = 0;
+// 
+// 
+// 	memset(&(session), 0, sizeof(sis_session));
+// 	session.mcu_task_info.send_head.cmd = CMD_MAIN_SDF_ENV_MANAGE;
+// 	session.mcu_task_info.send_head.sub_cmd = CMD_SUB_OPEN_DEVICE_BY_ID;
+// 	session.mcu_task_info.send_head.data_length = lenth;
+// 
+// 	session.mcu_task_info.send_param_count = 1;
+// 	session.mcu_task_info.send_param[0].ptr_param_len = &idlenth;
+// 	session.mcu_task_info.send_param[0].ptr_param = id;
+// 
+// 	rst = vsm_process(&session,nullptr);
+// 	if (rst == SDR_OK)
+// 	{
+// 		memcpy(&deviceAddr, session.mcu_task_info.resp_head.user_parm, 8);
+// 		rst = LIB_CreateDevice(deviceAddr, phDeviceHandle);
+// 		//debug_printf("The LIB_CreateDevice ret:%d,addr:0x%02x\n", rst, deviceAddr);
+// 	}
 
 	return rst;
 }
@@ -54,16 +54,8 @@ u32 SDF_OpenDeviceByID(HANDLE* phDeviceHandle, u8 *id, u32 lenth)
 /* 打开设备 */
 DLL u32 SDF_OpenDevice(HANDLE* phDeviceHandle)
 {
-// 	u8 id[32] = { 0 };
-// 	for (int i = 0; i < 32; i++)
-// 	{
-// 		id[i] = i + 0x30;
-// 	}
-// 	return SDF_OpenDeviceByID(phDeviceHandle, id, 32);
 
 	return C_OpenDevice(phDeviceHandle);
-
-
 }
 
 
@@ -74,24 +66,24 @@ DLL u32 SDF_CloseDevice(HANDLE hDeviceHandle)
 
 	sis_session session;
 	u32 rst = 0;
-	u32 params[1] = { 0 };
-	u64 deviceAddr = 0;
-
-	sis_device* dev;
-
-	memset(&(session), 0, sizeof(sis_session));
-	session.mcu_task_info.send_head.cmd = CMD_MAIN_SDF_ENV_MANAGE;
-	session.mcu_task_info.send_head.sub_cmd = CMD_SUB_CLOSE_DEVICE;
-	session.mcu_task_info.send_head.data_length = 0;
-	
-	//vsm将devicehandle的值存档到user_parm 中
-	//session.mcu_task_info.resp_head.user_parm = (u8*)deviceAddr;
-
-	rst = LIB_GetDevice(hDeviceHandle, &dev);
-	memcpy(&(session.mcu_task_info.send_head.user_parm), &(dev->device_address), 8);
-	rst = vsm_process(&session);
-	
-	rst = LIB_ReleaseDevice(dev, 0);
+// 	u32 params[1] = { 0 };
+// 	u64 deviceAddr = 0;
+// 
+// 	sis_device* dev;
+// 
+// 	memset(&(session), 0, sizeof(sis_session));
+// 	session.mcu_task_info.send_head.cmd = CMD_MAIN_SDF_ENV_MANAGE;
+// 	session.mcu_task_info.send_head.sub_cmd = CMD_SUB_CLOSE_DEVICE;
+// 	session.mcu_task_info.send_head.data_length = 0;
+// 	
+// 	//vsm将devicehandle的值存档到user_parm 中
+// 	//session.mcu_task_info.resp_head.user_parm = (u8*)deviceAddr;
+// 
+// 	rst = LIB_GetDevice(hDeviceHandle, &dev);
+// 	memcpy(&(session.mcu_task_info.send_head.user_parm), &(dev->device_address), 8);
+// 	rst = vsm_process(&session,nullptr);
+// 
+// 	rst = LIB_ReleaseDevice(dev, 0);
 	return rst;
 }
 
@@ -103,23 +95,23 @@ u32 SDF_CloseDeviceByID(HANDLE hDeviceHandle, u8 *id, u32 lenth)
 	u32 idlenth = lenth;
 	
 	u32 rst = 0;
-	u32 params[1] = { 0 };
-	u64 deviceAddr = 0;
-
-	memset(&(session), 0, sizeof(sis_session));
-	session.mcu_task_info.send_head.cmd = CMD_MAIN_SDF_ENV_MANAGE;
-	session.mcu_task_info.send_head.sub_cmd = CMD_SUB_CLOSE_DEVICE_BY_ID;
-	session.mcu_task_info.send_head.data_length = 32;
-	//vsm将devicehandle的值存档到user_parm 中
-	//session.mcu_task_info.resp_head.user_parm = (u8*)deviceAddr;
-	memcpy(&(session.mcu_task_info.resp_head.user_parm), &deviceAddr, sizeof(deviceAddr));
-
-	session.mcu_task_info.send_param_count = 1;
-	session.mcu_task_info.send_param[0].ptr_param_len = &idlenth;
-	session.mcu_task_info.send_param[0].ptr_param = id;
-	rst = vsm_process(&session);
-
-	rst = LIB_ReleaseALLDevice(0);
+// 	u32 params[1] = { 0 };
+// 	u64 deviceAddr = 0;
+// 
+// 	memset(&(session), 0, sizeof(sis_session));
+// 	session.mcu_task_info.send_head.cmd = CMD_MAIN_SDF_ENV_MANAGE;
+// 	session.mcu_task_info.send_head.sub_cmd = CMD_SUB_CLOSE_DEVICE_BY_ID;
+// 	session.mcu_task_info.send_head.data_length = 32;
+// 	//vsm将devicehandle的值存档到user_parm 中
+// 	//session.mcu_task_info.resp_head.user_parm = (u8*)deviceAddr;
+// 	memcpy(&(session.mcu_task_info.resp_head.user_parm), &deviceAddr, sizeof(deviceAddr));
+// 
+// 	session.mcu_task_info.send_param_count = 1;
+// 	session.mcu_task_info.send_param[0].ptr_param_len = &idlenth;
+// 	session.mcu_task_info.send_param[0].ptr_param = id;
+// 	rst = vsm_process(&session,nullptr);
+// 
+// 	rst = LIB_ReleaseALLDevice(0);
 	return GET_FULL_ERR_CODE(rst);
 }
 
@@ -135,16 +127,33 @@ DLL u32 SDF_OpenSession(HANDLE hDeviceHandle, HANDLE* phSessionHandle)
 	u64 sessionAddr = 0;
 	sis_device* device = NULL;
 
+
+	u32 idlenth = 32;
+	u8 id[32] = "wangzhanbei";
+
+
 	rst = LIB_GetDevice(hDeviceHandle, &device);
 	deviceAddr = device->device_address;
 
 	memset(&(session), 0, sizeof(sis_session));
+    session.device = device;
+
 	session.mcu_task_info.send_head.cmd = CMD_MAIN_SDF_ENV_MANAGE;
 	session.mcu_task_info.send_head.sub_cmd = CMD_SUB_OPEN_SESSION;
 	session.mcu_task_info.send_head.hard_parm = 0x0;
 	memcpy(&session.mcu_task_info.send_head.user_parm, &deviceAddr, 8);
+	
 
-	rst = vsm_process(&session);
+
+// 	session.mcu_task_info.send_head.data_length = idlenth;
+// 	session.mcu_task_info.send_param_count = 1;
+// 	session.mcu_task_info.send_param[0].ptr_param_len = &idlenth;
+// 	session.mcu_task_info.send_param[0].ptr_param = id;
+
+
+
+
+	rst = vsm_process(&session,nullptr);
 	if (rst == SDR_OK)
 	{
 		//返回值，将sesssion的地址放到session.mcu_task_info.resp_head.user_parm
@@ -175,16 +184,17 @@ DLL u32 SDF_CloseSession(HANDLE hSessionHandle)
 		return rst;
 	}
 	sessionAddr = releasesession->session_address;
+	session.device = releasesession->device;
 
 	//debug_printf("the release session addr is 0x%x\n", sessionAddr);
 
-	memset(&(session), 0, sizeof(sis_session));
+	//memset(&(session), 0, sizeof(sis_session));
 	session.mcu_task_info.send_head.cmd = CMD_MAIN_SDF_ENV_MANAGE;
 	session.mcu_task_info.send_head.sub_cmd = CMD_SUB_CLOSE_SESSION;
 	session.mcu_task_info.send_head.hard_parm = 0;
 	memcpy(&(session.mcu_task_info.send_head.user_parm), &sessionAddr, 8);
 	session.mcu_task_info.send_head.data_length = 0;
-	rst = vsm_process(&session);
+	rst = vsm_process(&session,nullptr);
 	if (rst == SDR_OK) {
 		rst = LIB_ReleaseSession(releasesession, 1);
         if(rst != 0){

@@ -5,7 +5,7 @@
 #include "../base/SDFLog.h"
 #include "../base/Util.h"
 
-#include "Interface.h"
+#include "interface.h"
 #include <string.h>
 
 /*客户端库全局上下文对象*/
@@ -46,7 +46,7 @@ u32 C_ExternPublicKeyOperationEnc_RSA(sis_session* session,
 	session->mcu_task_info.resp_param[1].ptr_param_len = puiDataOutLen;
 	session->mcu_task_info.resp_param[1].ptr_param = pDataOut;
 
-	rst = vsm_process(session);
+	rst = vsm_process(session,nullptr);
 	return GET_FULL_ERR_CODE(rst);
 }
 
@@ -84,7 +84,7 @@ u32 C_InterPublicKeyOperation_RSA(sis_session* session,
 	session->mcu_task_info.resp_param[1].ptr_param_len = puiDataOutLen;
 	session->mcu_task_info.resp_param[1].ptr_param = pDataOut;
 
-	rst = vsm_process(session);
+	rst = vsm_process(session,nullptr);
 	return GET_FULL_ERR_CODE(rst);
 }
 
@@ -122,7 +122,7 @@ u32 C_InterPrivateKeyOperation_RSA(sis_session* session,
 	session->mcu_task_info.resp_param[1].ptr_param_len = puiDataOutLen;
 	session->mcu_task_info.resp_param[1].ptr_param = pDataOut;
 
-	rst = vsm_process(session);
+	rst = vsm_process(session,nullptr);
 	return GET_FULL_ERR_CODE(rst);
 }
 
@@ -155,7 +155,7 @@ u32 C_InterSign_ECC_MCU(sis_session* session,
 	session->mcu_task_info.resp_param[0].ptr_param_len = (u32*)ptr_len_ecc_sign_data;
 	session->mcu_task_info.resp_param[0].ptr_param = (u8*)pucSignature;
 
-	rst = vsm_process(session);
+	rst = vsm_process(session,nullptr);
 
 	return GET_FULL_ERR_CODE(rst);
 }
@@ -186,7 +186,7 @@ u32 C_InterVerify_ECC_MCU(sis_session* session,
 	session->mcu_task_info.send_param[2].ptr_param = (u8*)&params[1];
 	session->mcu_task_info.send_param[3].ptr_param_len = &uiDataInputLen;
 	session->mcu_task_info.send_param[3].ptr_param = pucData;
-	rst = vsm_process(session);
+	rst = vsm_process(session,nullptr);
 	return GET_FULL_ERR_CODE(rst);
 }
 
@@ -220,7 +220,7 @@ u32 C_ExternVerify_ECC_MCU(sis_session* session,
 	session->mcu_task_info.send_param[3].ptr_param = (u8*)&params[1];
 	session->mcu_task_info.send_param[4].ptr_param_len = &uiDataInputLen;
 	session->mcu_task_info.send_param[4].ptr_param = pucData;
-	rst = vsm_process(session);
+	rst = vsm_process(session,nullptr);
 	debug_printf("C_ExternVerify_ECC_MCU status:0x%02x\n", session->mcu_task_info.resp_head.status);
 	return GET_FULL_ERR_CODE(rst);
 }
@@ -260,7 +260,7 @@ u32 C_ExternalEncrypt_ECC_MCU(sis_session *session,
 	session->mcu_task_info.resp_param[1].reply_prev_property = RELAY_PREV_PROPERTY;
 	session->mcu_task_info.resp_param[1].ptr_param_len = &(pucEncData->L);
 	session->mcu_task_info.resp_param[1].ptr_param = pucEncData->C;
-	rst = vsm_process(session);
+	rst = vsm_process(session,nullptr);
 	debug_printf("C_ExternalEncrypt_ECC_MCU status:0x%02x\n", session->mcu_task_info.resp_head.status);
 	return GET_FULL_ERR_CODE(rst);
 }
@@ -308,7 +308,7 @@ u32 C_InterSign_ECC(sis_session* session,
 	session->mcu_task_info.resp_param[1].ptr_param_len = (u32*)ptr_len_32;
 	session->mcu_task_info.resp_param[1].ptr_param = &(pucSignature->s[32]);
 
-	rst = vsm_process(session);
+	rst = vsm_process(session,nullptr);
 
 	//debug_printf("C_InterSign_ECC status:0x%02x\n",session->mcu_task_info.resp_head.status );
 	return GET_FULL_ERR_CODE(rst);
@@ -360,7 +360,7 @@ u32 C_InterVerify_ECC(sis_session* session,
 	session->mcu_task_info.resp_param[0].ptr_param_len = (u32 *)ptr_len_4;
 	session->mcu_task_info.resp_param[0].ptr_param = tmpdata;
 
-	rst = vsm_process(session);
+	rst = vsm_process(session,nullptr);
 	if (rst != SDR_OK) {
 		debug_printf("C_InterVerify_ECC ErrorCode:0x%02x\n", rst);
 	}
@@ -417,7 +417,7 @@ u32 C_ExternVerify_ECC(sis_session* session,
 	session->mcu_task_info.resp_param[0].ptr_param_len = (u32 *)ptr_len_4;
 	session->mcu_task_info.resp_param[0].ptr_param = tmpdata;
 
-	ret = vsm_process(session);
+	ret = vsm_process(session,nullptr);
 	if (session->mcu_task_info.resp_head.status == 0) {
 	}
 	else {
@@ -477,7 +477,7 @@ u32 C_ExternalEncrypt_ECC(sis_session *session,
 	//    session->mcu_task_info.resp_param[0].ptr_param_len = (u32 *)ptr_len_ecc_cipher;
 	//    session->mcu_task_info.resp_param[0].ptr_param = (u8 *)(pucEncData);
 
-	if (SDR_OK == (rst = vsm_process(session))) {
+	if (SDR_OK == (rst = vsm_process(session,nullptr))) {
 	
 	}
 

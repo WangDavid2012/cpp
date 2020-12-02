@@ -41,7 +41,8 @@ DLL u32 SDF_ImportKey(HANDLE hSessionHandle, u8* pucKey, u32 uiKeyLength, HANDLE
 		ret = C_ImportKey(session, pucKey, uiKeyLength, phKeyHandle);
 		if (SDR_OK != ret)
 		{
-			// _SDF_Log(SDF_ERR, "------>SDF_ImportKey,ret(0x%x)",ret);
+			printf("C_ImportKey errorCode : 0x%02x\n",ret); 
+			while (1);
 		}
 	}
 	return ret;

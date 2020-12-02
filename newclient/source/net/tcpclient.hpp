@@ -22,6 +22,7 @@ public:
 	int Write(const char *buf, int count);
 	int Read(char *buf, int lenth);
 	SOCKET getfd();
+	std::string gettcpip();
 
 private:
 	bool            m_used_flag;
@@ -30,6 +31,7 @@ private:
 	Socket 			m_socket;
 	SocketIO 	    m_socket_io;
 	SOCKET          m_sockfd;
+	std::string     m_ip;
 };
 
 #endif

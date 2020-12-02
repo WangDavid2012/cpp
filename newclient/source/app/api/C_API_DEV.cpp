@@ -3,7 +3,7 @@
 #include "../base/Context.h"
 #include "../base/Common.h"
 #include "../base/SDFLog.h"
-#include "Interface.h"
+#include "interface.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -33,7 +33,7 @@ u32 C_GetDeviceInfo(sis_session* session, DEVICEINFO *pstDeviceInfo)
 	//将输出结果指针执行传入的结构体，直接将内核态结果返回，减少一次内存拷贝
 	session->mcu_task_info.resp_param[0].ptr_param = (u8*)pstDeviceInfo;
 
-	if (SDR_OK == (rst = vsm_process(session)))
+	if (SDR_OK == (rst = vsm_process(session,nullptr)))
 	{
 		rst = session->mcu_task_info.resp_head.status;
 	}
@@ -81,7 +81,7 @@ u32 C_PrikeyLogin(sis_session* session, u32 KeyId, u8 *pPassword, u32 uiPasswdLe
 		session->mcu_task_info.send_param[2].ptr_param = pPassword;
 		session->mcu_task_info.resp_param_count = 0;
 	}
-	rst = vsm_process(session);
+	rst = vsm_process(session,nullptr);
 	if (rst != SDR_OK)
 	{
 		debug_printf("The return value is 0x%02x\n", rst);
@@ -114,7 +114,7 @@ u32 C_GetRandom(sis_session* session, u32 uiLen, u8 *pRandom)
 	session->mcu_task_info.resp_param[1].ptr_param_len = &randomOutLen;
 	session->mcu_task_info.resp_param[1].ptr_param = pRandom;
 
-	if (SDR_OK == (rst = vsm_process(session))) {
+	if (SDR_OK == (rst = vsm_process(session,nullptr))) {
 		rst = session->mcu_task_info.resp_head.status;
 	}
 	if (uiLen != randomOutLen) {

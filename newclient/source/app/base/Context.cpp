@@ -1,4 +1,4 @@
-﻿#include <string.h>
+﻿#include <string>
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -62,7 +62,7 @@ void LIB_HandleInit()
 	g_deviceList = Init_LinkList();
 }
 
-u32 LIB_CreateDevice(u64 deviceHandleAddr, HANDLE* deviceHandle)
+u32 LIB_CreateDevice(u64 deviceHandleAddr, HANDLE* deviceHandle,std::string ip)
 {
 	int ret = 0;
 	
@@ -73,6 +73,7 @@ u32 LIB_CreateDevice(u64 deviceHandleAddr, HANDLE* deviceHandle)
 	if (device == nullptr)
 		return -1;
 	device->device_address = deviceHandleAddr;
+	device->ip = ip;
 	*deviceHandle = (void *)device;
 	device->sessionlist = Init_LinkList();
 	device->worklist = Init_LinkList();
@@ -94,6 +95,7 @@ u32 LIB_CreateDevice(u64 deviceHandleAddr, HANDLE* deviceHandle)
 u32 LIB_GetDevice(HANDLE deviceHandle, sis_device** device)
 {
 	int ret = 0;
+	std::lock_guard<std::mutex> lock(devicemutex);
 	sis_device *tmpdevice = (sis_device*)deviceHandle;
 	ret = Find_LinkList(g_deviceList, (LinkNode*)(tmpdevice), DeviceCompareFun);
 	if (ret != -1) {
@@ -187,6 +189,7 @@ u32 LIB_GetSession(HANDLE sessionHandle, sis_session** session)
 {
 	int ret = 0;
 	int index = 0;
+	std::lock_guard<std::mutex> lock(sessionmutex);
 	sis_session *tmpsession = (sis_session *)sessionHandle;
 
 	index = Find_LinkList(tmpsession->device->sessionlist, (LinkNode*)tmpsession, SessionCompareFun);
@@ -283,6 +286,7 @@ u32 LIB_CreateWorkKey(sis_session* session, HANDLE* keyHandle, u64 keyHandleAddr
 }
 u32 LIB_GetWorkKey(sis_session* session, HANDLE keyHandle, sis_work_key** key)
 {
+	std::lock_guard<std::mutex> lock(workkeymutex);
 	sis_work_key *pkey = (sis_work_key *)keyHandle;
 	if (pkey == nullptr || session->device == nullptr) {
 		*key = nullptr;
@@ -441,9 +445,9 @@ void WorkkeyNodePrintf(LinkNode *data)
 void HandleTest()
 {
 	LIB_HandleInit();
-	LIB_CreateDevice(0x1111111111111111, &devhandle1);
-	LIB_CreateDevice(0x2222222222222222, &devhandle2);
-	LIB_CreateDevice(0x3333333333333333, &devhandle3);
+	LIB_CreateDevice(0x1111111111111111, &devhandle1,"172.16.10.142");
+	LIB_CreateDevice(0x2222222222222222, &devhandle2,"172.16.10.142");
+	LIB_CreateDevice(0x3333333333333333, &devhandle3,"172.16.10.142");
 	Print_LinkList(g_deviceList, DeviceNodePrintf);
 
 	LIB_GetDevice(devhandle2, &dev);

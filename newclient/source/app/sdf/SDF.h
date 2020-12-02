@@ -153,9 +153,7 @@ extern "C" {
 
 
 DLL u32 SDF_OpenDevice(HANDLE* phDeviceHandle);
-
 DLL u32 SDF_CloseDevice(HANDLE hDeviceHandle);
-
 DLL u32 SDF_OpenSession(HANDLE hDeviceHandle, HANDLE* phSessionHandle);
 
 DLL u32 SDF_CloseSession(HANDLE hSessionHandle);

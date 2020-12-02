@@ -7,6 +7,7 @@
 #include "./base/Common.h"
 #include "debug.h"
 #include "config.h"
+#include "Tcpclient.hpp"
 
 #ifdef  __cplusplus
 extern "C" {
@@ -15,7 +16,7 @@ extern "C" {
 
 u32 C_OpenDevice(void ** pDeviceHandle);
 
-u32 vsm_process(sis_session* session);
+u32 vsm_process(sis_session* session,TcpClient *clientsocket);
 u32 nettest(unsigned char *senddata, unsigned int sendlenth, unsigned char *recdata);
 
 

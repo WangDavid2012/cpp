@@ -4,7 +4,7 @@
 #include "../base/Context.h"
 #include "../base/Common.h"
 #include "../base/SDFLog.h"
-#include "Interface.h"
+#include "interface.h"
 #include "config.h"
 
 
@@ -98,7 +98,7 @@ u32 C_Crypt_MCU(sis_session *session,
 	session->mcu_task_info.resp_param[2].ptr_param_len = (u32 *)ptr_len_ecc_pub;
 	session->mcu_task_info.resp_param[2].ptr_param = pEncryptData;
 
-	if (SDR_OK == (rst = vsm_process(session)))
+	if (SDR_OK == (rst = vsm_process(session,nullptr)))
 	{
 		*puiEncryptDataLen = uiDataLen;
 	}
@@ -148,7 +148,7 @@ u32 C_MAC_MCU(sis_session *session,
 	session->mcu_task_info.resp_param[2].ptr_param_len = &uiDataLen;
 	session->mcu_task_info.resp_param[2].ptr_param = pMacData;
 
-	if (SDR_OK == (rst = vsm_process(session)))
+	if (SDR_OK == (rst = vsm_process(session,nullptr)))
 	{
 		*puiMacDataLen = 16;
 	}
@@ -233,7 +233,7 @@ u32 C_Crypt_FPGA_ECB(sis_session *session,
 	session->mcu_task_info.resp_param[0].ptr_param_len = puiOutDataLen;
 	session->mcu_task_info.resp_param[0].ptr_param = pOutData;
 
-	if (SDR_OK == (rst = vsm_process(session))) {
+	if (SDR_OK == (rst = vsm_process(session,nullptr))) {
 	}
 	return GET_FULL_ERR_CODE(rst);
 
@@ -338,7 +338,7 @@ u32 C_Crypt_FPGA_CBC(sis_session *session,
 	session->mcu_task_info.resp_param[1].ptr_param_len = (u32 *)ptr_len_16;
 	session->mcu_task_info.resp_param[1].ptr_param = symContext->iv;
 
-	if (SDR_OK == (rst = vsm_process(session))) {
+	if (SDR_OK == (rst = vsm_process(session,nullptr))) {
 
 		memcpy(symContext->iv, pOutData + uiInDataLen - 16, 16);
 
@@ -654,6 +654,13 @@ u32 C_Crypt_FPGA_MAC(sis_session *session,
 	sis_sym_ctx_t *symContext = NULL;
 	symContext = &session->sym_context;
 
+
+	//引入两个垃圾变量，是因为底层卡上传的数据比较多，此处只需要16个数据，但是底层
+	//上传数据时	uiInDataLen ，只有前16个有效，所以这么处理
+	//20200713 wangzhanbei
+	u8 tmpdata[1024*5] = {0};
+	u32 tmplen = uiInDataLen - 16;
+
 	/*根据算法确定给FPGA发送的指令*/
 
 	session->mcu_task_info.send_head.cmd = CMD_MAIN_SDF_SYM_PROCESS;
@@ -667,26 +674,34 @@ u32 C_Crypt_FPGA_MAC(sis_session *session,
 		break;
 	default:
 		break;
-	}
+	}								   
 
 	session->mcu_task_info.send_head.data_length = 8 + uiInDataLen + SM14_IV_LEN;
 	session->mcu_task_info.send_head.hard_parm = 0;
 
 	session->mcu_task_info.send_param_count = 3;
 
-	session->mcu_task_info.send_param[0].ptr_param_len = (u32 *)ptr_len_16;
-	session->mcu_task_info.send_param[0].ptr_param = (u8*)&(symContext->iv);
-	session->mcu_task_info.send_param[1].ptr_param_len = &uiInDataLen;
-	session->mcu_task_info.send_param[1].ptr_param = pInData;
-	session->mcu_task_info.send_param[2].ptr_param_len = (u32 *)ptr_len_8;
-	session->mcu_task_info.send_param[2].ptr_param = (u8*)&SymKeyAddr;
 
-	session->mcu_task_info.resp_param_count = 1;
+	session->mcu_task_info.send_param[0].ptr_param_len = (u32 *)ptr_len_8;
+	session->mcu_task_info.send_param[0].ptr_param = (u8*)&SymKeyAddr;
+	session->mcu_task_info.send_param[1].ptr_param_len = (u32 *)ptr_len_16;
+	session->mcu_task_info.send_param[1].ptr_param = (u8*)&(symContext->iv);
+	session->mcu_task_info.send_param[2].ptr_param_len = &uiInDataLen;
+	session->mcu_task_info.send_param[2].ptr_param = pInData;
+// 	session->mcu_task_info.send_param[2].ptr_param_len = (u32 *)ptr_len_8;
+// 	session->mcu_task_info.send_param[2].ptr_param = (u8*)&SymKeyAddr;
+
+	session->mcu_task_info.resp_param_count = 2;
 	session->mcu_task_info.resp_param[0].reply_prev_property = DEFAULT_PROPERTY;
 	session->mcu_task_info.resp_param[0].ptr_param_len = (u32 *)ptr_len_16;
 	session->mcu_task_info.resp_param[0].ptr_param = (u8 *)&(symContext->iv);
 
-	if (SDR_OK == (rst = vsm_process(session))) {
+	//此处无用数据时根据卡做的修改，卡中返回值是输入值的长度，需要全部读取完成
+	session->mcu_task_info.resp_param[1].reply_prev_property = DEFAULT_PROPERTY;
+	session->mcu_task_info.resp_param[1].ptr_param_len = (u32 *)&tmplen;
+	session->mcu_task_info.resp_param[1].ptr_param = (u8 *)&(tmpdata);
+
+	if (SDR_OK == (rst = vsm_process(session,nullptr))) {
 	}
 	return GET_FULL_ERR_CODE(rst);
 }
@@ -709,8 +724,7 @@ u32 C_Part_Crypt_FPGA(sis_session *session,
 	
 
 	u64 keyRealAddr = key->key_handle_addr;
-	if (keyRealAddr == 0)
-	{
+	if (keyRealAddr == 0){
 		debug_printf("****************error****************\n");
 		return SDR_OK;
 	}

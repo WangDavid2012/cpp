@@ -38,88 +38,86 @@ using namespace std;
 //普通函数
 int Add(int x, int y)
 {
-    return x + y;
+	return x + y;
 }
 
 
 void task_lambda()
 {
-    //包装可调用目标时lambda
-    packaged_task<int(int, int)> task([](int a, int b) {
-        return a + b;
-    });
+	//包装可调用目标时lambda
+	packaged_task<int(int, int)> task([](int a, int b) { return a + b; });
 
-    //仿函数形式，启动任务
-    task(2, 10);
+	//仿函数形式，启动任务
+	task(2, 10);
 
-    //获取共享状态中的值,直到ready才能返回结果或者异常
-    future<int> result = task.get_future();
-    cout << "task_lambda :" << result.get() << "\n";
+	//获取共享状态中的值,直到ready才能返回结果或者异常
+	future<int> result = task.get_future();
+	cout << "task_lambda :" << result.get() << "\n";
 }
 
 void task_thread()
 {
-    //包装普通函数
-    std::packaged_task<int(int, int)> task(Add);
-    future<int> result = task.get_future();
-    //启动任务，非异步
-    task(4, 8);
-    cout << "task_thread :" << result.get() << "\n";
+	//包装普通函数
+	std::packaged_task<int(int, int)> task(Add);
+	future<int> result = task.get_future();
+	//启动任务，非异步
+	task(4, 8);
+	cout << "task_thread :" << result.get() << "\n";
 
-    //重置共享状态
-    task.reset();
-    result = task.get_future();
+	//重置共享状态
+	task.reset();
+	result = task.get_future();
 
-    //通过线程启动任务，异步启动
-    thread td(move(task), 2, 10);
-    td.join();
-    //获取执行结果
-    cout << "task_thread :" << result.get() << "\n";
+	//通过线程启动任务，异步启动
+	thread td(move(task), 2, 10);
+	td.join();
+	//获取执行结果
+	cout << "task_thread :" << result.get() << "\n";
 }
 
 int packaged_task_test0()
 {
-    task_lambda();
-    task_thread();
+	task_lambda();
+	task_thread();
 
-    return 0;
+	return 0;
 }
 
 
 
 int Test_Fun(int a, int b, int &c)
 {
-    //a=1,b=2,c=0
+	//a=1,b=2,c=0
 
-    //突出效果，休眠5s
-    std::this_thread::sleep_for(std::chrono::seconds(5));
+	//突出效果，休眠5s
+	std::this_thread::sleep_for(std::chrono::seconds(5));
 
-    //c=233
-    c = a + b + 230;
+	//c=233
+	c = a + b + 230;
 
-    return c;
+	return c;
 }
 
 
 //参见promise用法相比较既可以理解用法
 int packaged_task_test1()
 {
-    //声明一个std::packaged_task对象pt1，包装函数Test_Fun
-    std::packaged_task<int(int, int, int &)> pt1(Test_Fun);
-    //声明一个std::future对象fu1，包装Test_Fun的返回结果类型，并与pt1关联
-    std::future<int> fu1 = pt1.get_future();
+	//声明一个std::packaged_task对象pt1，包装函数Test_Fun
+	std::packaged_task<int(int, int, int&)> pt1(Test_Fun);
+	//声明一个std::future对象fu1，包装Test_Fun的返回结果类型，并与pt1关联
+	std::future<int> fu1 = pt1.get_future();
 
-    //声明一个变量
-    int c = 0;
+	//声明一个变量
+	int c = 0;
 
-    //创建一个线程t1，将pt1及对应的参数放到线程里面执行
-    std::thread t1(std::move(pt1), 1, 2, std::ref(c));
+	//创建一个线程t1，将pt1及对应的参数放到线程里面执行
+	std::thread t1(std::move(pt1), 1, 2, std::ref(c));
 
-    //阻塞至线程t1结束(函数Test_Fun返回结果)
-    int iResult = fu1.get();
+	//阻塞至线程t1结束(函数Test_Fun返回结果)
+	int iResult = fu1.get();
 
-    std::cout << "执行结果：" << iResult << std::endl;	//执行结果：233
-    std::cout << "c：" << c << std::endl;				//c：233
+	std::cout << "执行结果：" << iResult << std::endl;	//执行结果：233
+	std::cout << "c：" << c << std::endl;				//c：233
 
-    return 1;
+	return 1;
 }

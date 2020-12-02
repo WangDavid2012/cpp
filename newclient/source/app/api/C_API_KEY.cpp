@@ -2,7 +2,7 @@
 #include "../api/C_API_EX.h"
 #include "../base/Context.h"
 #include "../base/Common.h"
-#include "Interface.h"
+#include "interface.h"
 #include "debug.h"
 
 
@@ -332,7 +332,7 @@ u32 C_GetPubEncKey_ECC(sis_session* session,
 	session->mcu_task_info.resp_param[0].ptr_param_len = (u32*)ptr_len_ecc_pub;
 	session->mcu_task_info.resp_param[0].ptr_param = (u8*)pPublicKey;
 
-	if (SDR_OK == (rst = vsm_process(session)))
+	if (SDR_OK == (rst = vsm_process(session,nullptr)))
 	{
 		pPublicKey->bits = ntohl(pPublicKey->bits);
 	}
@@ -361,7 +361,7 @@ u32 C_GetPubSignKey_ECC(sis_session* session,
 	session->mcu_task_info.resp_param[0].reply_prev_property = DEFAULT_PROPERTY;
 	session->mcu_task_info.resp_param[0].ptr_param_len = (u32*)ptr_len_ecc_pub;
 	session->mcu_task_info.resp_param[0].ptr_param = (u8*)pPublicKey;
-	if (SDR_OK == (rst = vsm_process(session)))
+	if (SDR_OK == (rst = vsm_process(session,nullptr)))
 	{
 		pPublicKey->bits = ntohl(pPublicKey->bits);
 	}
@@ -400,7 +400,7 @@ u32 C_GenKeyPair_ECC(sis_session* session,
 	session->mcu_task_info.resp_param[1].ptr_param_len = (u32*)ptr_len_ecc_pri;
 	session->mcu_task_info.resp_param[1].ptr_param = (u8*)pPrivateKey;
 
-	if (SDR_OK == (rst = vsm_process(session)))
+	if (SDR_OK == (rst = vsm_process(session,nullptr)))
 	{
 		pPublicKey->bits = ntohl(pPublicKey->bits);
 		pPrivateKey->bits = ntohl(pPrivateKey->bits);
@@ -454,7 +454,7 @@ u32 C_GenKeyWithIPK_ECC(sis_session* session,
 	session->mcu_task_info.resp_param[4].ptr_param_len = (u32*)&(pEccCipher->L);
 	session->mcu_task_info.resp_param[4].ptr_param = (u8*)(pEccCipher->C);
 
-	if (SDR_OK == (rst = vsm_process(session)))
+	if (SDR_OK == (rst = vsm_process(session,nullptr)))
 	{
 		respKeyHandle = ntohl(respKeyHandle);
 		respKeyAddress = ntohl(respKeyAddress);
@@ -516,7 +516,7 @@ u32 C_GenKeyWithEPK_ECC(sis_session* session,
 	session->mcu_task_info.resp_param[3].ptr_param_len = &(pEccCipher->L);
 	session->mcu_task_info.resp_param[3].ptr_param = (u8*)(pEccCipher->C);
 
-	if (SDR_OK == (rst = vsm_process(session)))
+	if (SDR_OK == (rst = vsm_process(session,nullptr)))
 	{
 		rst = LIB_CreateWorkKey(session, symKeyHandle, keyHandleAddr, 1);
 		debug_printf("The LIB_CreateWorkKey return 0x%02x\n", rst);
@@ -558,7 +558,7 @@ u32 C_ImportKeyWithISK_ECC(sis_session* session,
 	session->mcu_task_info.resp_param[0].ptr_param_len = (u32*)ptr_len_8;
 	session->mcu_task_info.resp_param[0].ptr_param = (u8*)&keyHandleAddr;
 
-	if (SDR_OK == (rst = vsm_process(session)))
+	if (SDR_OK == (rst = vsm_process(session,nullptr)))
 	{
 		rst = LIB_CreateWorkKey(session, symKeyHandle, keyHandleAddr, 1);
 		debug_printf("LIB_CreateWorkKey rst=0x%02x\n", rst);
@@ -620,7 +620,7 @@ u32 C_GenerateAgreementDataWithECC(sis_session* session,
 	session->mcu_task_info.resp_param[3].ptr_param_len = (u32*)ptr_len_ecc_pub;
 	session->mcu_task_info.resp_param[3].ptr_param = (u8*)pucPublicKey;
 
-	if (SDR_OK == (rst = vsm_process(session))) {
+	if (SDR_OK == (rst = vsm_process(session,nullptr))) {
 		// LIB_CreateWorkKey(session, (void **)&(handle->tempPubKey) ,respPubKeyAddress,1);
 		// LIB_CreateWorkKey(session, (void **)&(handle->tempPrvKey),respPrvKeyAddress,1);
 		// handle->agreePubkey.key_handle_addr = respPubKeyAddress;
@@ -715,7 +715,7 @@ u32 C_GenerateKeyWithECC(sis_session* session,
 	session->mcu_task_info.resp_param[0].ptr_param = (u8*)&respKeyAddress;
 
 
-	if (SDR_OK == (rst = vsm_process(session)))
+	if (SDR_OK == (rst = vsm_process(session,nullptr)))
 	{
 		debug_printf("----------The respKeyAddress is 0x%llx\n", respKeyAddress);
 		LIB_CreateWorkKey(session, phKeyHandle, respKeyAddress, 1);
@@ -788,7 +788,7 @@ u32 C_GenerateAgreementDataAndKeyWithECC(sis_session* session,
 
 
 
-	if (SDR_OK == (rst = vsm_process(session)))
+	if (SDR_OK == (rst = vsm_process(session,nullptr)))
 	{
 		debug_printf("-----------The respKeyAddress is 0x%llx,sessionAddress is 0x%llx\n", respKeyAddress, session->session_address);
 		LIB_CreateWorkKey(session, phKeyHandle, respKeyAddress, 1);
@@ -848,7 +848,7 @@ u32 C_ExchangeEnvelope_ECC(sis_session* session,
 	session->mcu_task_info.resp_param[1].ptr_param_len = &(pucEncDataOut->L);
 	session->mcu_task_info.resp_param[1].ptr_param = (u8*)(pucEncDataOut->C);
 
-	rst = vsm_process(session);
+	rst = vsm_process(session,nullptr);
 	return GET_FULL_ERR_CODE(rst);
 }
 
@@ -894,7 +894,7 @@ u32 C_GenKeyWithKEK(sis_session* session,
 	session->mcu_task_info.resp_param[2].ptr_param_len = pKeyCipherLen;
 	session->mcu_task_info.resp_param[2].ptr_param = pKeyCipher;
 
-	if (SDR_OK == (rst = vsm_process(session)))
+	if (SDR_OK == (rst = vsm_process(session,nullptr)))
 	{
 		LIB_CreateWorkKey(session, symKeyHandle, respKeyAddress, 1);
 	}
@@ -937,7 +937,7 @@ u32 C_ImportKeyWithKEK(sis_session* session,
 	session->mcu_task_info.resp_param[0].ptr_param_len = (u32*)ptr_len_8;
 	session->mcu_task_info.resp_param[0].ptr_param = (u8*)&respKeyAddress;
 
-	if (SDR_OK == (rst = vsm_process(session)))
+	if (SDR_OK == (rst = vsm_process(session,nullptr)))
 	{
 		LIB_CreateWorkKey(session, symKeyHandle, respKeyAddress, 1);
 	}
@@ -963,7 +963,7 @@ u32 C_DestorySymKey(sis_session* session, sis_work_key *key)
 
 	session->mcu_task_info.resp_param_count = 0;
 
-	rst = vsm_process(session);
+	rst = vsm_process(session,nullptr);
 	if (rst == SDR_OK) {
 		rst = LIB_ReleaseWorkKey(session, key, 1);
 	}

@@ -72,9 +72,11 @@ DLL u32 SDF_Encrypt(HANDLE hSessionHandle,
 		ret = C_Encrypt(session, uiAlgID, key, pucIV, pucData, uiDataLength, pucEncData, puiEncDataLength);
 		if (ret == SDR_OK) {
 			//_SDF_Log(SDF_INFO,"SDF_Encrypt complete......\n");
+		
 		}
 		else {
 			// _SDF_Log(SDF_ERR, "------>SDF_Encrypt,puiEncDataLength=%d", *puiEncDataLength);
+			debug_printf("C_Encrypt error\n");
 		}
 	}
 	return ret;
